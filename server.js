@@ -3,7 +3,7 @@ const path = require ('path');
 const port = process.env.PORT || 8080;
 const app = express();
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/dist'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(`${__dirname}/dist`, 'index.html'));
@@ -12,3 +12,4 @@ app.get('*', (req, res) => {
 
 app.listen(port);
 console.log('Server started');
+console.log(__dirname);

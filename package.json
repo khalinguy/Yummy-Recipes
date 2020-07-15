@@ -7,7 +7,7 @@
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "deve": "webpack-dev-server --mode development --open",
-    "postinstall": "webpack -p",
+    "heroku-postbuild": "webpack -p",
     "start": "node server.js"
   },
   "repository": {
