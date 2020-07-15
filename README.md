@@ -1,8 +1,7 @@
 # Yummy-Recipes
 Search for the recipes that you love
 
-npm run start
+# Stack
 
 # Demo
-
-https://khalinguy.github.io/Yummy-Recipes/
+https://yummy-recipes-khalinguy.herokuapp.com/
