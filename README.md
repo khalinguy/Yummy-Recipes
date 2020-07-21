@@ -24,5 +24,9 @@ Builds the app for production to the build folder.
 
 Your app is ready to be deployed!
 
+# Available search queries 
+https://forkify-api.herokuapp.com/phrases.html
+
+
 # Demo
 https://yummy-recipes-khalinguy.herokuapp.com/
