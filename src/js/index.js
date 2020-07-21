@@ -6,6 +6,7 @@ import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
 import * as likesView from './views/likesView';
+import * as errorView from './views/errorView';
 import {elements, renderLoader, clearLoader} from './views/base';
 /**Global state of the app
  * - Search object
@@ -24,10 +25,11 @@ const controlSearch = async () => {
         //New search object to state
         state.search = new Search(query);
 
-        //Clear input and search list
+        //Clear input and search list and error
         searchView.clearInput();
         searchView.clearResults();
         renderLoader(elements.searchRes);
+        errorView.clearError();
         try {
             //Search for recipes
             await state.search.getResults();
@@ -37,7 +39,7 @@ const controlSearch = async () => {
             searchView.renderResults(state.search.result);
         } catch (err){
             clearLoader();
-            alert('Something went with the search...');
+            // alert('Something went with the search...');
         }
     }
 };
@@ -58,16 +60,24 @@ elements.searchResPages.addEventListener('click', e => {
 
 /** RECIPE CONTROLLER **/
 const controlRecipe = async () => {
-    //Get ID from url
+    // Get ID from url
     const id = window.location.hash.replace('#','');
+
+    // Check if open recipe appear in search list
+    const checkIdInSearchView = () => {
+        state.search.result.forEach( el => {
+            if (el.recipe_id = id) return true;
+        });
+        return false;
+    };
 
     if (id){
         //Prepare UI for changes
         recipeView.clearRecipe();
         renderLoader(elements.recipe);
 
-        //Highlight selected item
-        if (state.search){
+        //Highlight selected item if it appears in search view
+        if (state.search && checkIdInSearchView()){
             searchView.highlightSelected(id);
         }
 
@@ -90,7 +100,7 @@ const controlRecipe = async () => {
                 state.likes.isLiked(id)
             );
         } catch (err){
-            alert(err + 'Error processing recipe!');
+            //alert(err + 'Error processing recipe!');
         }
     }
 };

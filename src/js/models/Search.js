@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as errorView from '../views/errorView';
 
 export default class Search{
     constructor(query){
@@ -15,7 +16,8 @@ export default class Search{
             // this.result = res.data.results; //Spoonacular API
             //console.log(this.result);
         } catch (error){
-            alert(error + ' Sorry! There are no recipes for what you searched :(');
+            errorView.searchError(error);
+            //alert(error + ' Sorry! There are no recipes for what you just searched :(');
         }
     }
 

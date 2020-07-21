@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as errorView from '../views/errorView';
 
 export default class Recipe{
     constructor(id) {
@@ -15,8 +16,9 @@ export default class Recipe{
             this.url = res.data.recipe.source_url;
             this.ingredients = res.data.recipe.ingredients;
         } catch (error) {
-            console.log(error);
-            alert('Something went wrong :(');
+            errorView.recipeError(error);
+            //console.log(error);
+            //alert('Something went wrong :(');
         }
     }
 
