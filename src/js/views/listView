@@ -22,3 +22,14 @@ export const deleteItem = id => {
     const item = document.querySelector(`[data-itemid="${id}"]`);
     if (item) item.parentElement.removeChild(item);
 };
+
+// Render delete all button
+export const renderDeleteAllItem = () => {
+    const markup =
+        `<div class="deleteAll" id="del">
+            <button class="btn-delete-all">Delete All            
+            </button>
+        </div>
+        `;
+    elements.shopping.insertAdjacentHTML('afterend', markup);
+}

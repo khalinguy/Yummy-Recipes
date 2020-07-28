@@ -118,6 +118,8 @@ const controlList = () => {
         const item = state.list.addItem(el.count, el.unit, el.ingredient);
         listView.renderItem(item);
     });
+    if (!state.list.isDeleteAllBtnHere()) listView.renderDeleteAllItem();
+
 };
 
 // LIKE CONTROLLER
@@ -168,9 +170,19 @@ window.addEventListener('load', () => {
     state.likes.likes.forEach(like => likesView.renderLike(like));
 });
 
+//Restore shopping list on page load
+window.addEventListener('load', () => {
+    state.list = new List();
+
+    state.list.readStorage();
+    if (state.list.items.length > 0) listView.renderDeleteAllItem();
+
+    state.list.items.forEach(item => listView.renderItem(item));
+});
+
 // Handle delete and update list item events
 elements.shopping.addEventListener('click', e => {
-    const id = state.list.items[0].id;//e.target.closest('.shopping__item').dataset.itemid;
+    const id = e.target.closest('.shopping__item').dataset.itemid;
     // Handle the delete button
     if (e.target.matches('.shopping__delete, .shopping__delete *')) {
         // Delete from state
@@ -179,9 +191,22 @@ elements.shopping.addEventListener('click', e => {
         // Delete from UI
         listView.deleteItem(id);
 
-    } else if (e.target.matches('.shopping__count-value')){
+    } else if (e.target.matches('.shopping__count-value')) {
         const val = parseFloat(e.target.value, 10);
-        state.list.updateCount(id,val);
+        state.list.updateCount(id, val);
+    }
+});
+
+// Handle delete all shopping list button
+elements.shoppingHeading.addEventListener('click', e => {
+    if (e.target.matches('.btn-delete-all')) {
+        // Delete from state
+        state.list.deleteAllItem();
+        // Delete from UI
+        elements.shopping.innerHTML = '';
+
+        const el = document.querySelector('.btn-delete-all').parentElement;
+        if (el) el.parentElement.removeChild(el);
     }
 });
 
@@ -201,3 +226,4 @@ elements.recipe.addEventListener('click', e => {
         controlLikes();
     }
 });
+
